@@ -1,6 +1,6 @@
-# todo-app
+# Приложение Todo list
 
-## Какие технологии использовал:
+## Стэк:
 - **Frontend**: React, tailwind
 - **Backend**: Node.js, Express
 - **ORM**: Prisma
