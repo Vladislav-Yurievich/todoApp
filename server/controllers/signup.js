@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 const prisma = new PrismaClient()
 
 export async function postSignUp(req, res) {
+	console.log(req.body)
 	const { firstName, lastName, middleName, login, password } = req.body
 	const salt = bcrypt.genSaltSync(10)
 	const hashedPassword = bcrypt.hashSync(password, salt)
