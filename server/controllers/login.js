@@ -4,6 +4,11 @@ import jwt from 'jsonwebtoken'
 const prisma = new PrismaClient()
 
 export async function postLogin(req, res) {
+
+if (!req.body) {
+        return res.status(400).json({ error: 'Тело запроса отсутствует' });
+    }
+	
 	const { login, password } = req.body
 	try {
 		const user = await prisma.users.findUnique({ where: { login } })
