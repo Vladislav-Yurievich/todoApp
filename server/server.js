@@ -1,5 +1,5 @@
-import express from 'express'
 import cors from 'cors'
+import express from 'express'
 import dotenv from 'dotenv'
 import signupRoute from './routes/signup.js'
 import loginRoute from './routes/login.js'
@@ -8,11 +8,16 @@ import usersRoute from './routes/users.js'
 import todosRoute from './routes/todos.js'
 
 dotenv.config()
-
-const app = express()
 const PORT = 3000
 
-app.use(cors({ origin: 'https://todo-app-client-8zbc.onrender.com' }));
+const corsOptions = {
+  origin: 'https://todo-app-client-8zbc.onrender.com',
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
+};
+
+const app = express()
+
+app.use(cors(corsOptions));
 
 app.post('/signup', signupRoute)
 
