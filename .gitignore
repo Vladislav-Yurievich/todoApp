@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+client/node_modules/
+server/node_modules/
+
+# Logs
+logs/
+*.log
+
+# .env files
+.env
+
+# Prisma
+prisma/migrations/
+
+# build outputs
+frontend/build/
+backend/build/
+
+# IDEs and editors
+.idea/
+.vscode/
