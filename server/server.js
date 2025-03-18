@@ -12,9 +12,11 @@ dotenv.config()
 const app = express()
 const PORT = 3000
 
-app.use(cors())
-app.use(express.json())
-
+app.use(
+	cors({
+		origin: 'https://todo-app-client-8zbc.onrender.com',
+	})
+)
 app.post('/signup', signupRoute)
 
 app.post('/login', loginRoute)
