@@ -1,6 +1,6 @@
 # Приложение Todo list
 
-## Стэк:
+## Стэк
 - **Frontend**: React, tailwind
 - **Backend**: Node.js, Express
 - **ORM**: Prisma
