@@ -10,7 +10,7 @@ export async function postSignUp(req, res) {
 	const hashedPassword = bcrypt.hashSync(password, salt)
 	try {
 		const userRole = await prisma.user_roles.findFirst({
-			where: { name: 'MANAGER' },
+			where: { name: 'USER' },
 		})
 		const newUser = await prisma.users.create({
 			data: {
