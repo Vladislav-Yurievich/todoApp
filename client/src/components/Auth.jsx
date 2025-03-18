@@ -31,7 +31,7 @@ const Auth = () => {
 		console.log('Sending data:', bodyData)
 
 		const response = await fetch(
-			`https://todo-app-backend-n730.onrender.com/${endpoint}`,
+			`${import.meta.env.VITE_REACT_APP_SERVERURL}/${endpoint}`,
 			{
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
