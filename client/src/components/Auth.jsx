@@ -4,7 +4,6 @@ import { useCookies } from 'react-cookie'
 const Auth = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(null)
 	const [isLogIn, setIsLogin] = useState(true)
-	// const [email, setEmail] = useState(null)
 	const [password, setPassword] = useState(null)
 	const [login, setLogin] = useState(null)
 	const [confirmPassword, setConfirmPassword] = useState(null)
@@ -32,7 +31,7 @@ const Auth = () => {
 		console.log('Sending data:', bodyData)
 
 		const response = await fetch(
-			`${import.meta.env.VITE_REACT_APP_SERVERURL}/${endpoint}`,
+			`https://todo-app-backend-n730.onrender.com/${endpoint}`,
 			{
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
