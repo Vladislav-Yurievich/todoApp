@@ -5,6 +5,8 @@
 - **Backend**: Node.js, Express
 - **ORM**: Prisma
 - **Database**: postgres
+
+- ## Инфо
 - **Адрес:** https://todo-app-client-8zbc.onrender.com
 - **Имя пользователя (руководитель)** admin
 - **Пароль пользователя (руководитель)** admin
