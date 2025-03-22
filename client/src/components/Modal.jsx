@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { X } from 'lucide-react'
+import useFetchUsers from '../hooks/useFetchUsers'
+import useFetchUserRole from '../hooks/useFetchUserRole'
+import { postData, editData } from '../api/todoApi'
 
 const Modal = ({ mode, setShowModal, getData, task }) => {
 	const [cookies] = useCookies(['AuthToken'])
@@ -17,101 +20,15 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 		assignee: editMode ? task.user_id : '',
 	})
 
-	const [users, setUsers] = useState([])
-	const [userRole, setUserRole] = useState('')
+	const users = useFetchUsers()
+	const userRole = useFetchUserRole()
 
-	useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const response = await fetch(
-					`${import.meta.env.VITE_REACT_APP_SERVERURL}/users`,
-					{
-						headers: {
-							Authorization: `Bearer ${cookies.AuthToken}`,
-						},
-					}
-				)
-				if (response.ok) {
-					const usersData = await response.json()
-					setUsers(usersData)
-				}
-			} catch (err) {
-				console.error(err)
-			}
-		}
-
-		const fetchUserRole = async () => {
-			try {
-				const response = await fetch(
-					`${import.meta.env.VITE_REACT_APP_SERVERURL}/user-role`,
-					{
-						headers: {
-							Authorization: `Bearer ${cookies.AuthToken}`,
-						},
-					}
-				)
-				if (response.ok) {
-					const roleData = await response.json()
-					setUserRole(roleData.name)
-				}
-			} catch (err) {
-				console.error(err)
-			}
-		}
-
-		fetchUsers()
-		fetchUserRole()
-	}, [cookies.AuthToken])
-
-	const postData = async e => {
+	const handleSubmit = async e => {
 		e.preventDefault()
-		try {
-			const response = await fetch(
-				`${import.meta.env.VITE_REACT_APP_SERVERURL}/todos`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${cookies.AuthToken}`,
-					},
-					body: JSON.stringify({
-						...data,
-						assigneeId: data.assignee,
-					}),
-				}
-			)
-			if (response.status === 200) {
-				setShowModal(false)
-				getData()
-			}
-		} catch (err) {
-			console.error(err)
-		}
-	}
-
-	const editData = async e => {
-		e.preventDefault()
-		try {
-			const response = await fetch(
-				`${import.meta.env.VITE_REACT_APP_SERVERURL}/todos/${task.id}`,
-				{
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${cookies.AuthToken}`,
-					},
-					body: JSON.stringify({
-						...data,
-						user_id: data.assignee,
-					}),
-				}
-			)
-			if (response.status === 200) {
-				setShowModal(false)
-				getData()
-			}
-		} catch (err) {
-			console.error(err)
+		if (editMode) {
+			await editData(data, task, cookies, setShowModal, getData)
+		} else {
+			await postData(data, cookies, setShowModal, getData)
 		}
 	}
 
@@ -123,7 +40,6 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 			[name]: value,
 		}))
 	}
-	// console.log(data)
 
 	return (
 		<div
@@ -146,7 +62,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 					</button>
 				</div>
 
-				<form className='p-4 md:p-5'>
+				<form className='p-4 md:p-5' onSubmit={handleSubmit}>
 					<div className='grid gap-4 mb-4 grid-cols-2'>
 						{userRole === 'MANAGER' && (
 							<>
@@ -288,7 +204,6 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 					<button
 						className='rounded-md bg-blue-500 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-400 focus:shadow-none active:bg-blue-400 hover:bg-blue-400 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'
 						type='submit'
-						onClick={editMode ? editData : postData}
 					>
 						{editMode ? 'Редактировать' : 'Добавить задачу'}
 					</button>
