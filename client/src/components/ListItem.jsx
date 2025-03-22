@@ -1,29 +1,12 @@
 import { useState } from 'react'
 import Modal from './Modal'
-import { useCookies } from 'react-cookie'
+import useDeleteItem from '../hooks/useDeleteItem'
+import useFetchUserRole from '../hooks/useFetchUserRole'
 
 const ListItem = ({ task, getData }) => {
 	const [showModal, setShowModal] = useState(false)
-	const [cookies] = useCookies(['AuthToken'])
-
-	const deleteItem = async () => {
-		try {
-			const response = await fetch(
-				`${import.meta.env.VITE_REACT_APP_SERVERURL}/todos/${task.id}`,
-				{
-					method: 'DELETE',
-					headers: {
-						Authorization: `Bearer ${cookies.AuthToken}`,
-					},
-				}
-			)
-			if (response.status === 200) {
-				getData()
-			}
-		} catch (err) {
-			console.error(err)
-		}
-	}
+	const deleteItem = useDeleteItem(getData)
+	const userRole = useFetchUserRole()
 
 	// Проверка, просрочена ли задача
 	const isOverdue = new Date(task.dueDate) < new Date()
@@ -70,9 +53,11 @@ const ListItem = ({ task, getData }) => {
 							Дедлайн: {new Date(task.dueDate).toLocaleDateString()}
 						</span>
 						<div className='button-container text-sm'>
-							<button className='delete' onClick={deleteItem}>
-								удалить
-							</button>
+							{userRole === 'MANAGER' && (
+								<button className='delete' onClick={() => deleteItem(task.id)}>
+									удалить
+								</button>
+							)}
 						</div>
 					</div>
 				</div>
