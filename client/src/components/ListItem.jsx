@@ -54,7 +54,13 @@ const ListItem = ({ task, getData }) => {
 						</span>
 						<div className='button-container text-sm'>
 							{userRole === 'MANAGER' && (
-								<button className='delete' onClick={() => deleteItem(task.id)}>
+								<button
+									className='delete'
+									onClick={e => {
+										e.stopPropagation()
+										deleteItem(task.id)
+									}}
+								>
 									удалить
 								</button>
 							)}
