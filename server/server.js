@@ -31,7 +31,7 @@ app.get('/user-role', authToken, usersRoute)
 
 app.post('/todos', authToken, todosRoute)
 
-app.get('/todos/:userLogin', todosRoute)
+app.get('/todos/:userLogin', authToken, todosRoute)
 
 app.put('/todos/:id', authToken, todosRoute)
 
