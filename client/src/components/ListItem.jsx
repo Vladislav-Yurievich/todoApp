@@ -27,10 +27,10 @@ const ListItem = ({ task, getData }) => {
           <div className="left__info">
             <p
               className={`text-sm ${
-                priority ? `text-[${priority.color}]` : "text-gray-400"
+                task.priority ? `text-[${task.priority.color}]` : "text-gray-400"
               }`}
             >
-              {priority ? priority.text : "Приоритет не указан"}
+              {task.priority ? task.priority.text : "Приоритет не указан"}
             </p>
             <p className={`task-title ${isOverdue ? "text-red-500" : ""}`}>
               {task.title}
