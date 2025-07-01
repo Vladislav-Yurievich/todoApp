@@ -11,13 +11,14 @@ dotenv.config()
 const PORT = 3000
 
 const corsOptions = {
-  origin: 'https://todo-app-client-8zbc.onrender.com',
-  methods: ['GET', 'POST', 'DELETE', 'PUT'],
-};
+	// origin: 'https://todo-app-client-8zbc.onrender.com',
+	origin: 'http://localhost:5173',
+	methods: ['GET', 'POST', 'DELETE', 'PUT'],
+}
 
 const app = express()
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions))
 app.options('*', cors())
 app.use(express.json())
 
@@ -31,12 +32,12 @@ app.get('/user-role', authToken, usersRoute)
 
 app.post('/todos', authToken, todosRoute)
 
-app.get('/todos/:userLogin',  todosRoute)
+app.get('/todos/:userLogin', todosRoute)
 
 app.put('/todos/:id', authToken, todosRoute)
 
 app.delete('/todos/:id', authToken, todosRoute)
 
 app.listen(PORT, () => {
-	console.log(`Server running on PORT ${PORT}}`)
+	console.log(`Server running on PORT ${PORT}`)
 })
