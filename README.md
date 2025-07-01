@@ -12,7 +12,8 @@
   - Express
 - **База данных**
   - PostgreSQL
-  - Prisma ORM
+- **ORM**
+  - Prisma
 
 ## 🚀 Демо
 
